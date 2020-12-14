@@ -3,12 +3,13 @@ package com.nacu.petclinic.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@RequestMapping("/owners")
 @Controller
-public class IndexController {
+public class OwnerController {
 
     @RequestMapping("")
-    public String index() {
-        return "index";
+    public String listOwners() {
+        return "owners/index";
     }
 
 }
