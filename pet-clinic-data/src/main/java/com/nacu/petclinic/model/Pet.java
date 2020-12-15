@@ -11,8 +11,7 @@ public class Pet extends BaseEntity {
     public Pet() {
     }
 
-    public Pet(Long id, PetType petType, Owner owner, LocalDate birthDay) {
-        super(id);
+    public Pet(PetType petType, Owner owner, LocalDate birthDay) {
         this.petType = petType;
         this.owner = owner;
         this.birthDay = birthDay;
