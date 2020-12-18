@@ -40,7 +40,7 @@ public class DataLoader implements CommandLineRunner {
 
         Pet pet1 = new Pet("Turi", savedDogPetType, owner1, LocalDate.of(2020, 7, 15));
         Pet pet2 = new Pet("Bianco", savedDogPetType, owner1, LocalDate.of(2020, 10, 21));
-        Pet pet3 = new Pet("Becalinho", savedDogPetType, owner2, LocalDate.of(1999, 12, 1));
+        Pet pet3 = new Pet("Becalinho", savedCatPetType, owner2, LocalDate.of(1999, 12, 1));
 
         owner1.getPets().add(pet1);
         owner1.getPets().add(pet2);
