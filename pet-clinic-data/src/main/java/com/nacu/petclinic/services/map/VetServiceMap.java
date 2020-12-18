@@ -1,13 +1,23 @@
 package com.nacu.petclinic.services.map;
 
+import com.nacu.petclinic.model.Specialty;
 import com.nacu.petclinic.model.Vet;
+import com.nacu.petclinic.services.SpecialtyService;
 import com.nacu.petclinic.services.VetService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
 public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetService {
+
+    private final SpecialtyService specialtyService;
+
+    @Autowired
+    public VetServiceMap(SpecialtyService specialtyService) {
+        this.specialtyService = specialtyService;
+    }
 
     @Override
     public Vet findById(Long id) {
@@ -31,6 +41,14 @@ public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetS
 
     @Override
     public Vet save(Vet object) {
+        if(object.getSpecialties().size() > 0) {
+            object.getSpecialties().forEach(specialty -> {
+                if(specialty.getId() == null) {
+                    Specialty savedSpecialty = specialtyService.save(specialty);
+                    specialty.setId(savedSpecialty.getId());
+                }
+            });
+        }
         return super.save(object);
     }
 }

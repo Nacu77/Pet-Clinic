@@ -1,11 +1,9 @@
 package com.nacu.petclinic.bootstrap;
 
-import com.nacu.petclinic.model.Owner;
-import com.nacu.petclinic.model.Pet;
-import com.nacu.petclinic.model.PetType;
-import com.nacu.petclinic.model.Vet;
+import com.nacu.petclinic.model.*;
 import com.nacu.petclinic.services.OwnerService;
 import com.nacu.petclinic.services.PetTypeService;
+import com.nacu.petclinic.services.SpecialtyService;
 import com.nacu.petclinic.services.VetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,16 +17,26 @@ public class DataLoader implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
     private final PetTypeService petTypeService;
+    private final SpecialtyService specialtyService;
 
     @Autowired
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialtyService specialtyService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
+        this.specialtyService = specialtyService;
     }
 
     @Override
     public void run(String... args) throws Exception {
+        int count = petTypeService.findAll().size();
+
+        if(count == 0) {
+            loadData();
+        }
+    }
+
+    private void loadData() {
         PetType dog = new PetType("Dog");
         PetType cat = new PetType("Cat");
         PetType savedDogPetType = petTypeService.save(dog);
@@ -50,8 +58,17 @@ public class DataLoader implements CommandLineRunner {
         ownerService.save(owner2);
         ownerService.save(owner3);
 
+        Specialty specialty1 = new Specialty("Ginecolog");
+        Specialty specialty2 = new Specialty("Radiolog");
+        Specialty specialty3 = new Specialty("Dentist");
+
         Vet vet1 = new Vet("Andreea", "Cristea");
+        vet1.getSpecialties().add(specialty1);
+        vet1.getSpecialties().add(specialty2);
+
         Vet vet2 = new Vet("Bianca", "Andrei");
+        vet2.getSpecialties().add(specialty3);
+
         vetService.save(vet1);
         vetService.save(vet2);
     }
