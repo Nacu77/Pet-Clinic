@@ -1,8 +1,14 @@
 package com.nacu.petclinic.model;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "visits")
 public class Visit extends BaseEntity {
@@ -17,36 +23,11 @@ public class Visit extends BaseEntity {
     @JoinColumn(name = "pet_id")
     private Pet pet;
 
-    public Visit() {
-    }
-
-    public Visit(LocalDate date, String description, Pet pet) {
+    @Builder
+    public Visit(Long id, LocalDate date, String description, Pet pet) {
+        super(id);
         this.date = date;
         this.description = description;
-        this.pet = pet;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Pet getPet() {
-        return pet;
-    }
-
-    public void setPet(Pet pet) {
         this.pet = pet;
     }
 }

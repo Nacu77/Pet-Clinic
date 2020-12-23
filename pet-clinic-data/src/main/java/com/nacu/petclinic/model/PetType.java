@@ -1,9 +1,15 @@
 package com.nacu.petclinic.model;
 
+import lombok.*;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "types")
 public class PetType extends BaseEntity {
@@ -11,18 +17,9 @@ public class PetType extends BaseEntity {
     @Column(name = "name")
     private String name;
 
-    public PetType() {
-    }
-
-    public PetType(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    @Builder
+    public PetType(Long id, String name) {
+        super(id);
         this.name = name;
     }
 }
